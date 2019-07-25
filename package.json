@@ -1,0 +1,25 @@
+{
+  "name": "algos",
+  "version": "1.0.0",
+  "description": "algorithms",
+  "main": "subsets.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fanyak/algos.git"
+  },
+  "keywords": [
+    "algorithms"
+  ],
+  "author": "Fani Akritidou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fanyak/algos/issues"
+  },
+  "homepage": "https://github.com/fanyak/algos#readme",
+  "dependencies": {
+    "typescript": "^3.5.3"
+  }
+}
