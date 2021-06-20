@@ -35,12 +35,12 @@ class Tree:
 
     # κώδικας με αναδρομή για να δημιουργήσυμε το λεξικό κωδικοποίησης
     # βρίσκοντας όλα τους κόμβους που είναι φύλλα
-    def walk(self,encode_dict,prefix):
+    def createDict(self,encode_dict,prefix):
         if self.isLeaf():
             encode_dict[self.left] = prefix
         else:
-            self.left.walk(encode_dict,prefix+[0])# add 0 if we move to the left
-            self.right.walk(encode_dict,prefix+[1]) # add 1 if we move to the right
+            self.left.createDict(encode_dict,prefix+[0])# add 0 if we move to the left
+            self.right.createDict(encode_dict,prefix+[1]) # add 1 if we move to the right
 
 ######################################## Κωδικοποίηση #########################################
 # ορίσματα συνάρτησης:
@@ -51,30 +51,31 @@ class Tree:
 #     δέντρο είναι το δέντρο Huffman που δημιουργείται από τον αλγόριθμο.
 def huffman(plist):
     # initialize set of tree nodes as leaves of the tree
-    tlist = [Tree(p,obj) for p,obj in plist]
+    node_list = [Tree(p,obj) for p,obj in plist]
 
     # Δημουργούμε το δέντρο Huffman ακολουθώντας τον αλγόριθμό
 
     # αριθμός υπάρχοντων κόμβων
-    n = len(tlist);
+    n = len(node_list);
     # χρησιμοποιούμε the heapq module για να δημουργήσουμε αυτόματα την ουρά προτεραιότητας 
     # από τη λίστα μας
-    heapq.heapify(tlist);
+    heapq.heapify(node_list);
     for i in range(n-1):
         # αφαιρούμε από τον σωρό τους κόμβους που έχουν τη μικρότερη πιθανότητα
-        left_child = heapq.heappop(tlist); # αριστερός θυγατρικός κόμβος
-        right_child = heapq.heappop(tlist); # δεξιός θυγατρικός κόμβος
+        left_child = heapq.heappop(node_list); # αριστερός θυγατρικός κόμβος
+        right_child = heapq.heappop(node_list); # δεξιός θυγατρικός κόμβος
         # δημιουργούμε την πιθανότητα από την συγχώνευση των κόμβων
         propability = left_child.p + right_child.p 
-        # δημιουργούμε νέο κόμβο με τους 2 παραπάνω θυγατρικούς και τη νέα πιθανότητα που υπολογίσαμε
+        # δημιουργούμε νέο κόμβο με τους 2 παραπάνω θυγατρικούς 
+        # και τη νέα πιθανότητα που υπολογίσαμε
         new_node = Tree(propability,left_child,right_child) 
         # προσθέτουμε τον νέο κόμβο στο σωρό
-        heapq.heappush(tlist,new_node);
+        heapq.heappush(node_list,new_node);
 
     # δημιουργούμε το λεξικό με τις κωδικοποιήσεις των χαρακτήρων
-    root = tlist[0]
+    root = node_list[0]
     encoding_dict = {}
-    root.walk(encoding_dict,[])
+    root.createDict(encoding_dict,[])
 
     # επιστρέφουμε 1 tuple με το λεξικό και το δέντρο huffman
     return (encoding_dict,root)
@@ -89,7 +90,7 @@ def encode(encoding_dict,message):
 #   huffman_tree -- η ρίζα του δέντρου  Huffman 
 # επιστρέφουμε:
 #  σειρά από αποδικωποιημένα σύμφβολα
-def decode(huffman_tree,encoded_message, cdict):
+def decode(huffman_tree, encoded_message, cdict):
     result = []
 
     # Χρησιμοποιούμα τα δυφία για να επιλέξουμε κατεύθυνση στο δέντρο
@@ -146,9 +147,10 @@ for i in range (7):
     for t in txt:
         if(t):
             encoded_message = encode(encoding_dict,list(t))
-            decoded_message = decode(root,encoded_message, encoding_dict)
-            if t !=''.join(decoded_message):
-                raise Exception('no match found {} {}'.format(t,''.join(decoded_message)))
+            ## Test για το αν η αποδικοποίηση αντιστοιχεί στο αριχκό μύνυμα.
+            # decoded_message = decode(root,encoded_message, encoding_dict)
+            # if t !=''.join(decoded_message):
+            #     raise Exception('no match found {} {}'.format(t,''.join(decoded_message)))
     t = (time.time() - start_time)
     print("--- %s seconds ---" % (round(t,3)), 'for size %s' %(file_size))
     y.append(round(t,3))

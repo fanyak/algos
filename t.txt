@@ -1,0 +1,4 @@
+Item	Price	Quantity
+bacon	10	1
+cheese	20	2
+bread	3	10
