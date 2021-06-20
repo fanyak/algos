@@ -15,8 +15,10 @@ while opt is None:
         assert key == 1 or key == 2
         opt = key;
     except AssertionError:
+        print("Please select either 1 or 2")
         continue;
     except ValueError:
+        print("Please select either 1 or 2")
         continue;
         
 
@@ -38,12 +40,14 @@ if opt == 1:
                          p = int(input("Price: $"))
                          price = p;
                     except ValueError:
-                       continue; 
+                        print("Please enter a number for the price")
+                        continue; 
                 while quantity is None:
                     try:
                         q = int(input("Quantity: "))
                         quantity = q;
                     except ValueError:
+                        print("Please enter a number for the quantity")
                         continue;
                 f.write(str(item) + "\t" + str(price) + "\t" +  str(quantity) + "\n")
                 print("\n********************\n")            
