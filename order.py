@@ -37,7 +37,7 @@ if opt == 1:
                 quantity = None;
                 while price is None:
                     try:
-                         p = int(input("Price: $"))
+                         p = float(input("Price: $"))
                          price = p;
                     except ValueError:
                         print("Please enter a number for the price")
@@ -52,7 +52,7 @@ if opt == 1:
                 f.write(str(item) + "\t" + str(price) + "\t" +  str(quantity) + "\n")
                 print("\n********************\n")            
             else:
-                 print("order saved to file %s.txt.  Exiting application" % file_name)
+                 print("Order saved to file %s.txt.  Exiting application" % file_name)
                  order = False;
                  f.close();
                  exit();
@@ -60,17 +60,22 @@ if opt == 1:
                  
 if opt == 2:
     data = None;
+    total = 0;
     while data is None:
         try:
          file_name = input("What order would you like to process? ")
          with open('./%s.txt' % file_name, 'r') as f:
             data = [order.strip().split('\t') for order in f.readlines()][1:];
+            print("\n********************\n") 
             print('Going to the shops and buying everything for you... Please hold');
             for d in data:
                 [item, price, quantity] = d;
-                total = int(price)*int(quantity)
-                print('\tSpending ${} on {}'.format(total,item));
-            print("Shopping complete.")   
+                sub_total = float(price)*int(quantity)
+                total += sub_total
+                print('\tSpending ${} on {}'.format(sub_total,item));
+            print("Shopping complete.") 
+            print("\n********************\n") 
+            print("Spent a total of %s." % total) 
             f.close()
         except FileNotFoundError:
             print("%s order does not exist." % file_name)

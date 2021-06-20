@@ -1,0 +1,3 @@
+Item	Price	Quantity
+bd	12.9	1
+dg	13.75	2

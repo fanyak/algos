@@ -1,0 +1,4 @@
+Item	Price	Quantity
+Bacon	12.0	2
+Cheese	7.0	1
+Bread	3.0	10
